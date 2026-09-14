@@ -123,16 +123,179 @@ http://localhost:8080/
 
 ---
 
-## 7. Ramas y Flujo de Trabajo Git
+## 7. Ramas y Flujo de Trabajo Git (Guía Paso a Paso para el Equipo)
 
-* **Rama Principal (`main`):** Rama de producción del repositorio. Es una rama protegida y estable; no recibe commits directos, únicamente integraciones probadas mediante Pull Requests.
-* **Ramas por Desarrollador:**
-  * `Kenny`: Modelos de usuario, roles RBAC, filtros JWT, interceptores de auditoría y endpoints `/api/auth/**` y `/api/auditoria/**` (Kenny Garay — Líder de Proyecto).
-  * `Hector`: Entidades de tareas de limpieza, máquina de estados de habitación, registro y resolución de incidencias/averías y endpoints `/api/operaciones/**` (Héctor Urbano).
-  * `David`: Entidades de habitación, reservas, validación de overbooking y endpoints `/api/habitaciones/**` y `/api/check-in/**` (David Asto).
-  * `Erik`: Entidad de huéspedes, historial y endpoints analíticos `/api/huespedes/**` y `/api/dashboard/kpis` (Erik Barrera).
-  * `Eliseo`: Catálogo de productos, control de stock y endpoints transaccionales `/api/pos/**` y `/api/caja/**` (Eliseo Mariño).
-* **Políticas de Integración:** Cada desarrollador prueba localmente con `./gradlew check` en su rama personal (`Kenny`, `Hector`, `David`, `Erik`, `Eliseo`) y solicita Pull Request hacia `main` bajo supervisión y aprobación del Líder del Proyecto (**Kenny Garay**).
+### 7.1. Ramas Oficiales del Proyecto
+* **Rama Principal (`main`):** Rama de producción oficial del Backend, estable y protegida. **Está prohibido hacer commits directos a `main`**. Todo cambio entra exclusivamente mediante Pull Request revisado y probado.
+* **Ramas Asignadas por Desarrollador:**
+  * `Kenny` ➔ **Kenny Garay** (Modelos de usuario, roles RBAC, filtros JWT, auditoría y endpoints `/api/auth/**`)
+  * `Hector` ➔ **Héctor Urbano** (Entidades de limpieza, incidencias/averías y endpoints `/api/operaciones/**`)
+  * `David` ➔ **David Asto** (Entidades de habitación, reservas, control de overbooking y endpoints `/api/habitaciones/**` y `/api/check-in/**`)
+  * `Erik` ➔ **Erik Barrera** (Entidad de huéspedes, historial y endpoints analíticos `/api/huespedes/**` y `/api/dashboard/kpis`)
+  * `Eliseo` ➔ **Eliseo Mariño** (Catálogo de productos, control de stock y endpoints transaccionales `/api/pos/**` y `/api/caja/**`)
+
+---
+
+### 7.2. Guía Práctica de Trabajo con Git y Visual Studio Code
+
+#### Paso 1: Clonar el repositorio y abrir en VS Code
+Tienes dos alternativas para clonar el proyecto en tu máquina:
+
+* **Opción A: Desde Visual Studio Code (Recomendado):**
+  1. Abre **Visual Studio Code**.
+  2. Presiona `Ctrl + Shift + P` para abrir la paleta de comandos.
+  3. Escribe `Git: Clone` y presiona **Enter**.
+  4. Pega la URL oficial del Backend:
+     ```
+     https://github.com/lFateGC/HOTELAVENTURA-BACKEND.git
+     ```
+  5. Selecciona la carpeta donde quieres almacenar el proyecto (ejemplo: `C:\Proyectos`).
+  6. Al terminar la descarga, haz clic en el aviso **"Open" / "Abrir repositorio"**.
+
+* **Opción B: Desde la Terminal (PowerShell / Git Bash / CMD):**
+  ```bash
+  # 1. Ve a la carpeta donde guardas tus proyectos
+  cd C:\Users\TuUsuario\Desktop\Proyectos
+
+  # 2. Clona el repositorio Backend
+  git clone https://github.com/lFateGC/HOTELAVENTURA-BACKEND.git
+
+  # 3. Entra a la carpeta del proyecto
+  cd HOTELAVENTURA-BACKEND
+
+  # 4. Abre el proyecto en VS Code
+  code .
+  ```
+
+---
+
+#### Paso 2: Cambiarte a tu Rama de Trabajo Asignada
+
+Cada integrante desarrolla sus controladores, servicios y entidades en su propia rama para evitar sobrescrituras accidentales:
+
+* **Desde la Terminal:**
+  ```bash
+  # Ver en qué rama estás actualmente
+  git branch
+
+  # Si tu rama ya existe en el remoto (ejemplo para Héctor):
+  git checkout Hector
+
+  # Si vas a crear tu rama localmente a partir de lo último de main:
+  git checkout -b Hector origin/main
+  ```
+  *(Reemplaza `Hector` por tu respectivo nombre: `David`, `Erik`, `Eliseo` o `Kenny`)*
+
+* **Desde la Interfaz de VS Code:**
+  1. En la **esquina inferior izquierda** de VS Code, haz clic sobre el nombre de la rama actual (por ejemplo, `main`).
+  2. En el menú que aparece arriba, selecciona tu rama asignada (o elige *"Create new branch..."* e ingresa tu nombre).
+
+---
+
+#### Paso 3: ¿Cómo sincronizar tu rama con lo último de `main`? *(¡Paso Fundamental!)*
+A medida que el equipo avanza, nuevas entidades y servicios se integrarán a `main`. Para tener siempre el código más reciente y evitar conflictos al programar:
+
+```bash
+# 1. Asegúrate de estar en tu rama personal
+git checkout Hector
+
+# 2. Trae y fusiona los últimos cambios de main hacia tu rama
+git pull origin main
+```
+
+> **¿Qué hace este comando?** Descarga de GitHub todas las actualizaciones ya aprobadas en `main` y las une con tu código local, asegurando compatibilidad con los servicios de los demás compañeros.
+> 
+> *En VS Code:* Presiona `Ctrl + Shift + P` ➔ escribe `Git: Pull From...` ➔ elige `origin` ➔ selecciona `origin/main`.
+
+---
+
+#### Paso 4: Trabajar, confirmar cambios (Commits) y buenas prácticas
+
+Durante el desarrollo de tus endpoints o lógica de negocio:
+
+1. **Revisar el estado de los archivos modificados:**
+   ```bash
+   git status
+   ```
+2. **Agregar los archivos al área de preparación:**
+   ```bash
+   git add .
+   ```
+3. **Crear el commit con mensaje descriptivo:**
+   ```bash
+   git commit -m "feat(habitaciones): creación de entidad Room y repositorio JPA"
+   ```
+   *Prefijos recomendados para los commits:*
+   * `feat:` Nueva funcionalidad o endpoint (ej. `feat(auth): login con token JWT`)
+   * `fix:` Corrección de errores (ej. `fix(checkin): validar sobrealquiler de habitación`)
+   * `refactor:` Optimización o reestructuración de clases sin cambiar comportamiento
+   * `docs:` Cambios en documentación técnica o comentarios JavaDoc
+
+* **Hacer el Commit en VS Code con interfaz gráfica:**
+  1. Abre la pestaña **Control de código fuente** (*Source Control*) en la barra lateral izquierda (`Ctrl + Shift + G`).
+  2. Escribe el mensaje de commit en el campo superior.
+  3. Haz clic en el botón azul **Commit** (o presiona `Ctrl + Enter`).
+
+---
+
+#### Paso 5: Subir tus avances a GitHub (`git push`)
+
+Antes de subir cambios, **siempre verifica que el Backend compile limpiamente**:
+
+```bash
+# 1. Validar la compilación Java y dependencias
+# En Windows:
+.\gradlew.bat compileJava
+
+# En Linux / Mac / Git Bash:
+./gradlew compileJava
+
+# 2. Subir tu rama a GitHub
+git push origin Hector
+```
+*(Reemplaza `Hector` por el nombre de tu rama)*
+
+* **En VS Code:** Haz clic en **"Sync Changes" / "Sincronizar cambios"** o en los tres puntos `...` ➔ **Push**.
+
+---
+
+#### Paso 6: Crear un Pull Request (PR) en GitHub hacia `main`
+
+Al completar una tarea o funcionalidad de tu módulo:
+
+1. Ingresa a GitHub: [HOTELAVENTURA-BACKEND](https://github.com/lFateGC/HOTELAVENTURA-BACKEND).
+2. Haz clic en el aviso amarillo **"Compare & pull request"** (o en la pestaña **Pull requests** ➔ **New pull request**).
+3. Selecciona la dirección de integración:
+   * **base:** `main` ⬅️ **compare:** `TuNombre` *(ej. `Hector`)*.
+4. Escribe un título explicativo (ejemplo: `feat: API REST de registro y consulta de averías`).
+5. Describe brevemente los endpoints o entidades creadas.
+6. En la barra lateral derecha, en **Reviewers**, selecciona al Líder del Proyecto (**Kenny Garay** / `lFateGC`).
+7. Haz clic en **"Create pull request"**.
+8. El Líder validará las pruebas, revisará la arquitectura y aprobará el *merge* hacia `main`.
+
+---
+
+#### Paso 7: ¿Qué hacer si hay un conflicto al hacer pull?
+Si al ejecutar `git pull origin main` aparece un aviso de **CONFLICT**:
+1. Abre los archivos en conflicto en **VS Code**.
+2. Encima del código resaltado verás los botones de resolución:
+   * **Accept Current Change:** Conserva tu cambio local.
+   * **Accept Incoming Change:** Acepta el cambio que vino de `main`.
+   * **Accept Both Changes:** Mantiene ambos fragmentos.
+3. Guarda el archivo (`Ctrl + S`) y en la terminal ejecuta:
+   ```bash
+   git add .
+   git commit -m "merge: resolver conflictos con main"
+   git push origin TuNombre
+   ```
+
+---
+
+### 7.3. Reglas de Oro para el Equipo
+1. 🚫 **NUNCA hagas commits directos sobre la rama `main`**. Cada integrante trabaja exclusivamente en su rama personal.
+2. 🔄 **SIEMPRE haz `git pull origin main`** antes de empezar a programar para trabajar sobre la última versión estable.
+3. 🧪 **SIEMPRE ejecuta `.\gradlew.bat compileJava`** antes de hacer push para asegurar que no se suba código roto.
+4. 💬 **Haz commits frecuentes y claros**, documentando cada clase o funcionalidad añadida.
 
 ---
 
