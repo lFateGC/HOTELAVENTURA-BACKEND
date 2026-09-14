@@ -67,10 +67,10 @@ HOTELAVENTURA-BACKEND/
 │   ├── main/
 │   │   ├── java/com/hotelaventura/
 │   │   │   ├── config/      # Configuración de Seguridad, CORS, Auditoría
-│   │   │   ├── controller/  # Controladores REST (/api/habitaciones, /api/auth, /api/pos, etc.)
+│   │   │   ├── controller/  # Controladores REST
 │   │   │   ├── dto/         # Request y Response Data Transfer Objects validados
-│   │   │   ├── entity/      # Entidades JPA (@Entity, @Table, relaciones relacionales)
-│   │   │   ├── exception/   # Manejo global de excepciones (@RestControllerAdvice)
+│   │   │   ├── entity/      # Entidades JPA
+│   │   │   ├── exception/   # Manejo global de excepciones
 │   │   │   ├── repository/  # Interfaces Spring Data JPA
 │   │   │   ├── service/     # Interfaces de reglas de negocio
 │   │   │   │   └── impl/    # Implementación de los servicios
@@ -79,7 +79,7 @@ HOTELAVENTURA-BACKEND/
 │   │       └── application.properties   # Configuración de puerto, perfiles y Supabase JDBC
 │   └── test/                # Pruebas unitarias e integración con JUnit Platform
 ├── .gitattributes           # Configuración de atributos Git para compatibilidad de finales de línea
-├── .gitignore               # Exclusiones de Git (build/, .gradle/, etc.)
+├── .gitignore               # Exclusiones de Git
 ├── build.gradle             # Definición de dependencias y plugins de Spring Boot
 ├── gradlew                  # Script ejecutable en entornos Linux / macOS / Bash
 ├── gradlew.bat              # Script ejecutable en Windows PowerShell / CMD
@@ -302,10 +302,10 @@ Si al ejecutar `git pull origin main` aparece un aviso de **CONFLICT**:
 ---
 
 ### 7.3. Reglas de Oro para el Equipo
-1. 🚫 **NUNCA hagas commits directos sobre la rama `main`**. Cada integrante trabaja exclusivamente en su rama personal.
-2. 🔄 **SIEMPRE haz `git pull origin main`** antes de empezar a programar para trabajar sobre la última versión estable.
-3. 🧪 **SIEMPRE ejecuta `.\gradlew.bat compileJava`** antes de hacer push para asegurar que no se suba código roto.
-4. 💬 **Haz commits frecuentes y claros**, documentando cada clase o funcionalidad añadida.
+1. **NUNCA hagas commits directos sobre la rama `main`**. Cada integrante trabaja exclusivamente en su rama personal.
+2. **SIEMPRE haz `git pull origin main`** antes de empezar a programar para trabajar sobre la última versión estable.
+3. **SIEMPRE ejecuta `.\gradlew.bat compileJava`** antes de hacer push para asegurar que no se suba código roto.
+4. **Haz commits frecuentes y claros**, documentando cada clase o funcionalidad añadida.
 
 ---
 
