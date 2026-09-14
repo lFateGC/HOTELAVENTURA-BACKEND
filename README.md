@@ -1,6 +1,6 @@
 # Hotel Aventura — Backend (API REST Spring Boot)
 
-> **Curso:** Herramientas de Desarrollo (Sección 39171) — Servicio API REST y lógica de negocio para el sistema hotelero Hotel Aventura.  
+> **Curso:** Herramientas de Desarrollo (Sección 39171)  
 > **Docente:** Agullas Suares, Marlene Pilar  
 > **Año Académico:** 2026  
 > **Repositorio Oficial Backend:** [https://github.com/lFateGC/HOTELAVENTURA-BACKEND](https://github.com/lFateGC/HOTELAVENTURA-BACKEND)  
@@ -12,12 +12,22 @@
 * **Nombre del Proyecto:** Hotel Aventura — Backend (API REST de Reservas y Gestión de Habitaciones)
 * **Curso:** Herramientas de Desarrollo (Sección 39171)
 * **Docente:** Agullas Suares, Marlene Pilar
-* **Tipo de Aplicación:** API RESTful robusta y desacoplada con persistencia relacional en la nube (Spring Boot 4 + Java 21 LTS)
+* **Tipo de Aplicación:** API RESTful en Spring Boot 4 + Java 21 con base de datos PostgreSQL en la nube
 
 ---
 
 ## 2. Descripción del Proyecto
-Módulo Backend del sistema **Hotel Aventura**. Centraliza la lógica de negocio, reglas transaccionales, seguridad y persistencia de datos del hotel. Reemplaza la manipulación manual de registros asegurando transacciones ACID que erradican el overbooking accidental, gestionan el ciclo de vida de las habitaciones (disponible, ocupada, limpieza, mantenimiento), calculan tarifas automáticas de Check-In (Pernocte / Day Use), controlan el stock del punto de venta y auditan cada acción por roles.
+Este repositorio contiene el **Backend (API REST)** del sistema **Hotel Aventura**, desarrollado para el curso de Herramientas de Desarrollo.
+
+Aquí se concentra toda la lógica del negocio, el procesamiento de datos y la seguridad del sistema. El objetivo principal es eliminar el registro en papel y las hojas de cálculo que actualmente causan errores en el hotel, como habitaciones asignadas dos veces (*overbooking*), pérdidas en los cobros de consumos o falta de claridad en el dinero que entra a caja.
+
+Desde este backend se gestionan los servicios que consume la aplicación web del frontend:
+* **Control de Habitaciones:** Validación estricta para asegurar que ninguna habitación ocupada o en limpieza pueda ser reservada por error.
+* **Cálculo de Tarifas y Check-In:** Lógica para cobrar de forma automática según el tipo de estadía elegida por el cliente: por noche completa (**Pernocte**) o por horas (**Day Use**).
+* **Gestión de Huéspedes:** Registro seguro de los clientes con validación de documentos (DNI/Pasaporte) e historial de visitas.
+* **Operaciones de Limpieza y Averías:** Control del estado de las habitaciones (disponible, ocupada, sucia/limpieza o en mantenimiento por avería reportada).
+* **Punto de Venta (POS) y Caja Chica:** Registro de consumos extras, control de stock de productos y registro de aperturas, cobros y cierres de caja.
+* **Seguridad y Roles:** Autenticación de usuarios (Administrador, Recepcionista, Operario) para que cada empleado solo pueda acceder a lo que le corresponde.
 
 ---
 
@@ -301,16 +311,16 @@ Si al ejecutar `git pull origin main` aparece un aviso de **CONFLICT**:
 
 ## 8. Estado del Proyecto / Avance Actual (Avance 1)
 
-### Implementado en este Avance 1:
-* **Entorno y Herramientas:** Configuración completa de Spring Boot 4.1.1 con Java 21 LTS y Gradle 9.x.
-* **Separación de Repositorios:** Repositorio Backend desacoplado e independiente del Frontend.
-* **Configuración de Dependencias:** Integración resuelta de Spring Web, Spring Security, Spring Data JPA, PostgreSQL Driver y Lombok.
-* **Verificación de Compilación:** Compilación `compileJava` verificada al 100% libre de errores.
-* **Gestión de Proyecto en GitHub:** Matriz de integrantes, roles, ramas individuales y seguimiento de backlog con GitHub Issues.
+### Lo que tenemos listo en este Avance 1:
+* **Configuración del proyecto:** Proyecto base creado en Spring Boot 4.1.1 con Java 21 y Gradle.
+* **Separación de repositorios:** Repositorio Backend desacoplado e independiente del Frontend para trabajar con mayor orden.
+* **Dependencias listas:** Agregamos y configuramos las librerías necesarias (Spring Web, Spring Security, Spring Data JPA, PostgreSQL y Lombok).
+* **Compilación verificada:** Código compilado con `.\gradlew.bat compileJava` exitosamente sin ningún error.
+* **Organización en GitHub:** Repositorio configurado con ramas de trabajo por integrante y control de tareas mediante GitHub Issues.
 
-### Pendiente para Siguientes Avances:
-* **Sprint 2 (Backend Core 100% — Enfoque Prioritario):** Conexión con base de datos en la nube **Supabase (PostgreSQL)**, creación de entidades JPA, repositorios, servicios y APIs REST para pruebas de funcionamiento de los servicios/microservicios del proyecto.
-* **Sprint 4 (Despliegue y QA):** Levantamiento y despliegue del servicio Backend a la red mediante **Render** (o plataforma afín) conectado a Supabase, pruebas de concurrencia y sustentación final.
+### Lo que trabajaremos en los siguientes avances:
+* **Sprint 2 (Enfoque principal en Backend):** Conectar el proyecto a la base de datos PostgreSQL en **Supabase**, crear las tablas/entidades JPA y programar los endpoints REST de cada módulo para empezar a probarlos.
+* **Sprint 4:** Desplegar la API en la nube (usando **Render** u otra plataforma conectada a Supabase), pruebas de rendimiento y sustentación final.
 
 ---
 
