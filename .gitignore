@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Variables de Entorno y Secretos ###
+.env
+.env.local
+.env.*.local
+*.env
+*.log
+*.sqlite
+
