@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
+// Endpoint comun para subir imagenes (habitaciones, productos, etc.)
 @RestController
 @RequestMapping("/api/storage")
 @CrossOrigin(origins = "*")
@@ -18,7 +19,7 @@ public class StorageController {
         this.storageService = storageService;
     }
 
-    // Endpoint para que el front nos mande la foto en form-data y le respondamos la URL
+    // Endpoint para subir foto multipart y retornar la URL publica
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> subirImagen(
             @RequestParam("file") MultipartFile file,

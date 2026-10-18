@@ -1,4 +1,4 @@
-package com.hotelaventura.config;
+package com.hotelaventura.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,13 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthFilter jwtAuthFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
-    // Usamos BCrypt para no guardar contraseñas en texto plano
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,32 +33,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Deshabilitamos csrf porque trabajamos con tokens bearer
                 .csrf(AbstractHttpConfigurer::disable)
-
-                // Habilitamos cors para que el front de react no tenga problemas
                 .cors(Customizer.withDefaults())
-
-                // Modo stateless: no usamos sesiones en memoria
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                // Seguridad básica para que no incrusten la web en iframes
                 .headers(headers -> headers
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
                         .contentTypeOptions(Customizer.withDefaults())
                 )
-
-                // Dejamos libres las rutas de login, fotos y catalogo; lo demas con token
+                // Permitimos rutas publicas y /api/** libre para el desarrollo en equipo
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/storage/**").permitAll()
                         .requestMatchers("/api/portal/**").permitAll()
-                        .requestMatchers("/api/**").permitAll() // Temporal para probar entre nosotros
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
-
-                // Metemos nuestro filtro de jwt antes del filtro por defecto de spring
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

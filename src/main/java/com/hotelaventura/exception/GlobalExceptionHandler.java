@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    // Reglas de negocio que no se cumplen (ej: sin stock o fechas al reves) (400)
+    // Reglas de negocio que no se cumplen (400)
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex, WebRequest request) {
         ErrorResponse error = ErrorResponse.builder()
@@ -64,7 +64,6 @@ public class GlobalExceptionHandler {
     // Cualquier otro error no previsto (500)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex, WebRequest request) {
-        // No mandamos el stack trace al cliente por seguridad
         ErrorResponse error = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())

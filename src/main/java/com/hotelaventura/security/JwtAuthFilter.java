@@ -1,11 +1,9 @@
-package com.hotelaventura.config;
+package com.hotelaventura.security;
 
-import com.hotelaventura.modulo_seguridad.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,12 +15,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 
-// Interceptamos cada peticion para ver si viene con token de autorizacion
+// Interceptor de peticiones HTTP para autorizacion con token Bearer
 @Component
-@RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+
+    public JwtAuthFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -30,11 +31,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
 
-        // Verificamos si mandaron el token Bearer
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7); // quitamos la palabra Bearer y el espacio
+            String token = authHeader.substring(7);
 
-            // Si la firma es correcta y no ha vencido, seteamos el usuario en spring
             if (jwtUtil.validarToken(token)) {
                 String username = jwtUtil.obtenerUsername(token);
 
@@ -50,7 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        // Continuamos con el flujo normal de la peticion
         filterChain.doFilter(request, response);
     }
 }
