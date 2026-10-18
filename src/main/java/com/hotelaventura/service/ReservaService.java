@@ -1,7 +1,7 @@
-package com.hotelaventura.modulo_habitaciones_reservas.service;
+package com.hotelaventura.service;
 
-import com.hotelaventura.modulo_habitaciones_reservas.dto.ReservaRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.dto.ReservaResponseDTO;
+import com.hotelaventura.dto.ReservaRequestDTO;
+import com.hotelaventura.dto.ReservaResponseDTO;
 
 import java.util.List;
 

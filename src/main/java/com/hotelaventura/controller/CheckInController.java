@@ -1,9 +1,9 @@
-package com.hotelaventura.modulo_habitaciones_reservas.controller;
+package com.hotelaventura.controller;
 
-import com.hotelaventura.modulo_habitaciones_reservas.dto.CheckInRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.dto.CheckOutRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.entity.Estancia;
-import com.hotelaventura.modulo_habitaciones_reservas.service.CheckInService;
+import com.hotelaventura.dto.CheckInRequestDTO;
+import com.hotelaventura.dto.CheckOutRequestDTO;
+import com.hotelaventura.entity.Estancia;
+import com.hotelaventura.service.CheckInService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

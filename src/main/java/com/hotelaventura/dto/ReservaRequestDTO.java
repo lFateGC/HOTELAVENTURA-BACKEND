@@ -1,4 +1,4 @@
-package com.hotelaventura.modulo_habitaciones_reservas.dto;
+package com.hotelaventura.dto;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;

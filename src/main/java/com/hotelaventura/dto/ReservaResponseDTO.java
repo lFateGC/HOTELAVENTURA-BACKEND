@@ -1,4 +1,4 @@
-package com.hotelaventura.modulo_habitaciones_reservas.dto;
+package com.hotelaventura.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

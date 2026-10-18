@@ -1,8 +1,8 @@
-package com.hotelaventura.modulo_habitaciones_reservas.service;
+package com.hotelaventura.service;
 
-import com.hotelaventura.modulo_habitaciones_reservas.dto.CheckInRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.dto.CheckOutRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.entity.Estancia;
+import com.hotelaventura.dto.CheckInRequestDTO;
+import com.hotelaventura.dto.CheckOutRequestDTO;
+import com.hotelaventura.entity.Estancia;
 
 import java.util.List;
 

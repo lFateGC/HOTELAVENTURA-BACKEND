@@ -1,8 +1,8 @@
-package com.hotelaventura.modulo_habitaciones_reservas.repository;
+package com.hotelaventura.repository;
 
-import com.hotelaventura.modulo_habitaciones_reservas.entity.EstadoLimpieza;
-import com.hotelaventura.modulo_habitaciones_reservas.entity.EstadoOperativo;
-import com.hotelaventura.modulo_habitaciones_reservas.entity.Habitacion;
+import com.hotelaventura.entity.EstadoLimpieza;
+import com.hotelaventura.entity.EstadoOperativo;
+import com.hotelaventura.entity.Habitacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

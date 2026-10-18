@@ -1,4 +1,4 @@
-package com.hotelaventura.modulo_habitaciones_reservas.entity;
+package com.hotelaventura.entity;
 
 public enum ModalidadEstancia {
     PERNOCTE,

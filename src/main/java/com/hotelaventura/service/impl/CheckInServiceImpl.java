@@ -1,14 +1,14 @@
-package com.hotelaventura.modulo_habitaciones_reservas.service.impl;
+package com.hotelaventura.service.impl;
 
 import com.hotelaventura.exception.BadRequestException;
 import com.hotelaventura.exception.ResourceNotFoundException;
-import com.hotelaventura.modulo_habitaciones_reservas.dto.CheckInRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.dto.CheckOutRequestDTO;
-import com.hotelaventura.modulo_habitaciones_reservas.entity.*;
-import com.hotelaventura.modulo_habitaciones_reservas.repository.EstanciaRepository;
-import com.hotelaventura.modulo_habitaciones_reservas.repository.HabitacionRepository;
-import com.hotelaventura.modulo_habitaciones_reservas.repository.ReservaRepository;
-import com.hotelaventura.modulo_habitaciones_reservas.service.CheckInService;
+import com.hotelaventura.dto.CheckInRequestDTO;
+import com.hotelaventura.dto.CheckOutRequestDTO;
+import com.hotelaventura.entity.*;
+import com.hotelaventura.repository.EstanciaRepository;
+import com.hotelaventura.repository.HabitacionRepository;
+import com.hotelaventura.repository.ReservaRepository;
+import com.hotelaventura.service.CheckInService;
 import com.hotelaventura.service.AuditoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
