@@ -9,7 +9,7 @@ import com.hotelaventura.modulo_habitaciones_reservas.repository.EstanciaReposit
 import com.hotelaventura.modulo_habitaciones_reservas.repository.HabitacionRepository;
 import com.hotelaventura.modulo_habitaciones_reservas.repository.ReservaRepository;
 import com.hotelaventura.modulo_habitaciones_reservas.service.CheckInService;
-import com.hotelaventura.modulo_seguridad.service.AuditoriaService;
+import com.hotelaventura.service.AuditoriaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
