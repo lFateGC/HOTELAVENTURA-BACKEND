@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Set;
 
-// Manejo de tokens JWT con HMAC-SHA256 nativo de Java
+// Manejo de tokens JWT con HMAC-SHA256
 @Component
 public class JwtUtil {
 
@@ -88,6 +88,33 @@ public class JwtUtil {
             return payloadJson.substring(subIdx, endIdx);
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    // Extrae los roles guardados en el payload del token
+    public Set<String> obtenerRoles(String token) {
+        try {
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+            String[] parts = token.split("\\.");
+            String payloadJson = new String(Base64.getUrlDecoder().decode(parts[1]), StandardCharsets.UTF_8);
+            int rolesIdx = payloadJson.indexOf("\"roles\":[");
+            if (rolesIdx == -1) return java.util.Collections.emptySet();
+            int start = rolesIdx + 9;
+            int end = payloadJson.indexOf("]", start);
+            if (end <= start) return java.util.Collections.emptySet();
+            String rolesStr = payloadJson.substring(start, end).replace("\"", "").trim();
+            if (rolesStr.isEmpty()) return java.util.Collections.emptySet();
+            Set<String> set = new java.util.HashSet<>();
+            for (String r : rolesStr.split(",")) {
+                if (!r.trim().isEmpty()) {
+                    set.add(r.trim());
+                }
+            }
+            return set;
+        } catch (Exception e) {
+            return java.util.Collections.emptySet();
         }
     }
 

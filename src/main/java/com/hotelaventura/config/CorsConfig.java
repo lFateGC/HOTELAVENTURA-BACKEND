@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// Configuracion para que el frontend de React pueda comunicarse con nuestra API
 @Configuration
 public class CorsConfig {
 
@@ -16,10 +15,10 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOriginPatterns(
-                                "http://localhost:5173", // Vite por defecto
-                                "http://localhost:3000", // React clasico
+                                "http://localhost:5173",
+                                "http://localhost:3000",
                                 "http://127.0.0.1:5173",
-                                "https://*.vercel.app"   // Despliegues de front
+                                "https://*.vercel.app"
                         )
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
