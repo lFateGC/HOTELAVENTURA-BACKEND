@@ -58,34 +58,63 @@ Desde este backend se gestionan los servicios que consume la aplicación web del
 
 ---
 
-## 5. Estructura de Carpetas
+## 5. Estructura de Carpetas (Arquitectura Modular por Integrante)
 
 ```
 HOTELAVENTURA-BACKEND/
-├── gradle/wrapper/          # Binarios y configuración del wrapper de Gradle
+├── gradle/wrapper/          # Binarios del wrapper de Gradle
 ├── src/
 │   ├── main/
 │   │   ├── java/com/hotelaventura/
-│   │   │   ├── config/      # Configuración de Seguridad, CORS, Auditoría
-│   │   │   ├── controller/  # Controladores REST
-│   │   │   ├── dto/         # Request y Response Data Transfer Objects validados
-│   │   │   ├── entity/      # Entidades JPA
-│   │   │   ├── exception/   # Manejo global de excepciones
-│   │   │   ├── repository/  # Interfaces Spring Data JPA
-│   │   │   ├── service/     # Interfaces de reglas de negocio
-│   │   │   │   └── impl/    # Implementación de los servicios
-│   │   │   └── util/        # Utilidades transversales
+│   │   │   ├── config/                          # Configuración global (Spring Security, CORS)
+│   │   │   ├── exception/                       # Manejo centralizado de excepciones y respuestas HTTP
+│   │   │   │
+│   │   │   ├── modulo_seguridad/                # [Kenny - Líder] 1. Acceso/Seguridad & 12. Auditoría
+│   │   │   │   ├── controller/                  # AuthController, UsuarioController, AuditoriaController
+│   │   │   │   ├── dto/                         # LoginRequest, AuthResponse, RegistroUsuarioRequest, UsuarioDTO
+│   │   │   │   ├── entity/                      # Usuario, Rol, Auditoria, RolNombre (enum)
+│   │   │   │   ├── repository/                  # UsuarioRepository, RolRepository, AuditoriaRepository
+│   │   │   │   └── service/                     # AuthService, UsuarioService, AuditoriaService
+│   │   │   │
+│   │   │   ├── modulo_habitaciones_reservas/    # [David] 3. Habitaciones, 4. Reservas & 5. Check-in/Out
+│   │   │   │   ├── controller/                  # HabitacionController, TipoHabitacionController, ReservaController, CheckInController
+│   │   │   │   ├── dto/                         # HabitacionDTO, TipoHabitacionDTO, ReservaRequestDTO, CheckInRequestDTO
+│   │   │   │   ├── entity/                      # Habitacion, TipoHabitacion, Piso, Reserva, Estancia
+│   │   │   │   ├── repository/                  # HabitacionRepository, TipoHabitacionRepository, PisoRepository, ReservaRepository, EstanciaRepository
+│   │   │   │   └── service/                     # HabitacionService, ReservaService, CheckInService
+│   │   │   │
+│   │   │   ├── modulo_huespedes_dashboard/      # [Erik] 2. Huéspedes & 11. Reportes y Dashboard
+│   │   │   │   ├── controller/                  # HuespedController, DashboardController
+│   │   │   │   ├── dto/                         # HuespedDTO, RegistroHuespedDTO (MINCETUR), DashboardKpiDTO
+│   │   │   │   ├── entity/                      # Huesped, RegistroHuesped
+│   │   │   │   ├── repository/                  # HuespedRepository, RegistroHuespedRepository
+│   │   │   │   └── service/                     # HuespedService, DashboardService
+│   │   │   │
+│   │   │   ├── modulo_operaciones_servicios/    # [Héctor] 7. Limpieza/Mantenimiento & 8. Incidencias
+│   │   │   │   ├── controller/                  # TareaLimpiezaController, IncidenciaController
+│   │   │   │   ├── dto/                         # TareaLimpiezaDTO, IncidenciaDTO
+│   │   │   │   ├── entity/                      # TareaLimpieza, Incidencia
+│   │   │   │   ├── repository/                  # TareaLimpiezaRepository, IncidenciaRepository
+│   │   │   │   └── service/                     # TareaLimpiezaService, IncidenciaService
+│   │   │   │
+│   │   │   ├── modulo_pos_caja_inventario/      # [Eliseo] 6. Servicios, 9. Inventario & 10. Caja
+│   │   │   │   ├── controller/                  # ProductoController, FolioController, CajaController, VentaPOSController
+│   │   │   │   ├── dto/                         # ProductoDTO, CargoDTO, PagoDTO, TurnoCajaDTO, VentaPOSDTO
+│   │   │   │   ├── entity/                      # Producto, Folio, Cargo, Pago, TurnoCaja, VentaPOS, DetalleVenta
+│   │   │   │   ├── repository/                  # ProductoRepository, FolioRepository, CargoRepository, TurnoCajaRepository, VentaPOSRepository
+│   │   │   │   └── service/                     # ProductoService, FolioService, CajaService, VentaPOSService
+│   │   │   │
+│   │   │   └── modulo_portal_cliente/           # [Portal Web de Clientes / Huéspedes]
+│   │   │       ├── controller/                  # PortalClienteController (Catálogo, Disponibilidad, Reservas online)
+│   │   │       ├── dto/                         # CatalogoHabitacionDTO, RegistroClienteRequest, ReservaClienteRequestDTO
+│   │   │       └── service/                     # PortalClienteService
+│   │   │
 │   │   └── resources/
-│   │       └── application.properties   # Configuración de puerto, perfiles y Supabase JDBC
-│   └── test/                # Pruebas unitarias e integración con JUnit Platform
-├── .gitattributes           # Configuración de atributos Git para compatibilidad de finales de línea
-├── .gitignore               # Exclusiones de Git
-├── build.gradle             # Definición de dependencias y plugins de Spring Boot
-├── gradlew                  # Script ejecutable en entornos Linux / macOS / Bash
-├── gradlew.bat              # Script ejecutable en Windows PowerShell / CMD
-├── HELP.md                  # Referencias y guías técnicas de Spring Boot
-├── README.md                # Documentación oficial del repositorio Backend
-└── settings.gradle          # Configuración de nombre del proyecto Gradle
+│   │       └── application.properties           # Configuración de puerto, PostgreSQL y Hibernate DDL
+│   └── test/                                    # Pruebas unitarias de integración
+├── build.gradle                                 # Dependencias de Spring Boot 4 y plugins
+├── gradlew / gradlew.bat                        # Scripts ejecutables de construcción
+└── README.md                                    # Documentación técnica oficial del Backend
 ```
 
 ---
