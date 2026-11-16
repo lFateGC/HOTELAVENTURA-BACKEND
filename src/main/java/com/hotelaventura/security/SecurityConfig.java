@@ -46,8 +46,9 @@ public class SecurityConfig {
                         // 1. Peticiones CORS preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // 2. Rutas Públicas (Autenticación y recursos)
+                        // 2. Rutas Públicas (Autenticación, sincronización en tiempo real y recursos)
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/realtime/**").permitAll()
                         .requestMatchers("/api/storage/**").permitAll()
                         .requestMatchers("/api/portal/**").permitAll()
 

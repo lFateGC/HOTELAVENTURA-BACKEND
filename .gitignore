@@ -7,6 +7,9 @@ target/
 # Entorno y Secretos
 .env
 *.env
+data/
+*.mv.db
+*.trace.db
 
 ### STS ###
 .apt_generated
