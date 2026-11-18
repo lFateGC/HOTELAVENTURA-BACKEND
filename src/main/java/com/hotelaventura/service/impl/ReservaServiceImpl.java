@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -113,6 +114,32 @@ public class ReservaServiceImpl implements ReservaService {
     @Transactional(readOnly = true)
     public List<ReservaResponseDTO> listarTodas() {
         return reservaRepository.findAllByOrderByFechaCreacionDesc().stream()
+                .map(this::convertirADTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReservaResponseDTO> listarLlegadasHoy(LocalDate fecha) {
+        LocalDate f = fecha != null ? fecha : LocalDate.now();
+        return reservaRepository.findByFechaLlegada(f).stream()
+                .map(this::convertirADTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReservaResponseDTO> listarSalidasHoy(LocalDate fecha) {
+        LocalDate f = fecha != null ? fecha : LocalDate.now();
+        return reservaRepository.findByFechaSalida(f).stream()
+                .map(this::convertirADTO)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReservaResponseDTO> listarPorEstado(EstadoReserva estado) {
+        return reservaRepository.findByEstado(estado).stream()
                 .map(this::convertirADTO)
                 .toList();
     }

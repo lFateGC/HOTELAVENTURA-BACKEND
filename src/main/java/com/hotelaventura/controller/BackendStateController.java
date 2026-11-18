@@ -1,6 +1,5 @@
 package com.hotelaventura.controller;
 
-import com.hotelaventura.config.DataInitializer;
 import com.hotelaventura.entity.*;
 import com.hotelaventura.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -36,16 +35,12 @@ public class BackendStateController {
     private final AuditoriaRepository auditoriaRepository;
     private final SistemaColeccionRepository sistemaColeccionRepository;
     private final PasswordEncoder passwordEncoder;
-    private final DataInitializer dataInitializer;
 
     private static final DateTimeFormatter DT_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @GetMapping(value = "/state", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Transactional
+    @Transactional(readOnly = true)
     public ResponseEntity<String> obtenerEstadoDesdePostgres() {
-        if (huespedRepository.count() == 0 || habitacionRepository.count() < 20) {
-            dataInitializer.seedThreeMonthsDataIfEmpty();
-        }
         Map<String, Object> state = new LinkedHashMap<>();
 
         // 1. Usuarios desde tabla `usuarios`
@@ -527,7 +522,6 @@ public class BackendStateController {
         reservaRepository.deleteAll();
         huespedRepository.deleteAll();
         sistemaColeccionRepository.deleteAll();
-        dataInitializer.seedThreeMonthsDataIfEmpty();
         return ResponseEntity.ok("{\"ok\":true}");
     }
 

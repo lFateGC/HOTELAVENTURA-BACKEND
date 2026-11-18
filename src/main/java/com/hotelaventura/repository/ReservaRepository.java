@@ -14,6 +14,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     Optional<Reserva> findByCodigo(String codigo);
     List<Reserva> findByEstado(EstadoReserva estado);
     List<Reserva> findByFechaLlegada(LocalDate fechaLlegada);
+    List<Reserva> findByFechaSalida(LocalDate fechaSalida);
+    List<Reserva> findByFechaLlegadaAndEstado(LocalDate fechaLlegada, EstadoReserva estado);
+    List<Reserva> findByFechaSalidaAndEstado(LocalDate fechaSalida, EstadoReserva estado);
     List<Reserva> findByDocumentoTitular(String documentoTitular);
     List<Reserva> findAllByOrderByFechaCreacionDesc();
     long countByEstado(EstadoReserva estado);
